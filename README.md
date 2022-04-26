@@ -4,6 +4,6 @@ I'm using this repository to experiment with diffeent work flows to create a pro
 
 ## Steps
 
-### Design overall algorithm, disregard any type of data structures
+#### Design overall algorithm, disregard any type of data structures
 
-### Something
+#### Something
