@@ -1,8 +1,9 @@
-from unittest import TestCase
+import random
+import unittest
 from DessertData import DessertData
 
 
-class TestDessertData(TestCase):
+class TestDessertData(unittest.TestCase):
 
     def setUp(self) -> None:
         self._tot_rows = 10
@@ -14,10 +15,15 @@ class TestDessertData(TestCase):
 
 class TestInit(TestDessertData):
 
-    def test_num_rows(self):
-        for num_rows in range(1, 20):
-            self.assertEqual(len(DessertData(num_rows).data()), num_rows)
+    def test_neg_rows(self):
+        self.assertRaises(ValueError, DessertData, -1)
 
+    def test_num_rows(self):
+        for num_rows in range(0, 20):
+            with self.subTest(i=num_rows):
+                self.assertEqual(len(DessertData(num_rows).data()), num_rows)
+
+    @unittest.skip("Noise level not implemented")
     def test_noise_level(self):
         self.fail()
 
@@ -25,23 +31,31 @@ class TestInit(TestDessertData):
 class TestSplit(TestDessertData):
 
     def test_split_objects(self):
-        train_obj, test_obj = self.test_data.split(0.5)
+        """
+        Test that split returns DessertData objects
+        """
+        train_obj, test_obj = self.test_data.split(random.random())
         self.assertIsInstance(train_obj, DessertData)
         self.assertIsInstance(test_obj, DessertData)
 
     def test_split_one(self):
         """
-        Test that 100% returns all the data
+        Test that splitting 100% returns all data in training and empty in test
         """
-        self.assertEqual(self.test_data.split(1.0)[0].data(), self.test_data.data())
+        train_set, test_set = self.test_data.split(1.0)
+        self.assertEqual(train_set.data(), self.test_data.data())
+        self.assertFalse(test_set.data())
 
     def test_split_rand(self):
         """
-        Test that the number of rows is correct.
+        Test that the number of rows is correct. Cannot test actual data since it's shuffled
+        before splitting.
         """
         for row_num in range(0, self._tot_rows):
-            percentage = row_num/self._tot_rows
-            temp = self.test_data.split(percentage)[0]
-            actual_data = self.test_data.split(percentage)[0].data()
+            with self.subTest(i=row_num):
+                percentage = row_num/self._tot_rows
+                train_set, test_set = self.test_data.split(percentage)
 
-            self.assertEqual(len(actual_data), row_num)
+                self.assertEqual(len(train_set.data()), row_num, "Train set wrong size")
+                self.assertEqual(len(test_set.data()), self._tot_rows-row_num, "Test set wrong " \
+                                                                               "size")

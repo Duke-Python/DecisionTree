@@ -9,6 +9,9 @@ class DessertData(DecisionTreeData):
     The dessert data
     """
     def __init__(self, num_rows, noise=0.0, data=None):
+        if num_rows < 0:
+            raise ValueError
+
         self._noise_level = noise
         self._num_rows = num_rows
         if data is None:
