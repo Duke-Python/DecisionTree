@@ -21,7 +21,7 @@ class TestInit(TestDessertData):
     def test_num_rows(self):
         for num_rows in range(0, 20):
             with self.subTest(i=num_rows):
-                self.assertEqual(len(DessertData(num_rows).data()), num_rows)
+                self.assertEqual(len(DessertData(num_rows).data), num_rows)
 
     @unittest.skip("Noise level not implemented")
     def test_noise_level(self):
@@ -43,8 +43,8 @@ class TestSplit(TestDessertData):
         Test that splitting 100% returns all data in training and empty in test
         """
         train_set, test_set = self.test_data.split(1.0)
-        self.assertEqual(train_set.data(), self.test_data.data())
-        self.assertFalse(test_set.data())
+        self.assertEqual(train_set.data, self.test_data.data)
+        self.assertFalse(test_set.data)
 
     def test_split_rand(self):
         """
@@ -56,6 +56,5 @@ class TestSplit(TestDessertData):
                 percentage = row_num/self._tot_rows
                 train_set, test_set = self.test_data.split(percentage)
 
-                self.assertEqual(len(train_set.data()), row_num, "Train set wrong size")
-                self.assertEqual(len(test_set.data()), self._tot_rows-row_num, "Test set wrong " \
-                                                                               "size")
+                self.assertEqual(len(train_set.data), row_num, "Train set wrong size")
+                self.assertEqual(len(test_set.data), self._tot_rows-row_num, "Test set wrong size")

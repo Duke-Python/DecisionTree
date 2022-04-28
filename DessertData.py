@@ -19,6 +19,7 @@ class DessertData(DecisionTreeData):
             feature_list = [[0, 1] for _ in range(num_features)]
             mesh = np.array(np.meshgrid(*feature_list))
             self._data = mesh.T.reshape(2 ** num_features, num_features)
+            self._expand(self._num_rows)
         else:
             self._data = data
 
@@ -40,6 +41,7 @@ class DessertData(DecisionTreeData):
         return DessertData(train_rows, self._noise_level, train_data),\
                DessertData(test_rows, self._noise_level, test_data)
 
+    @property
     def data(self):
         """
         Get the actual data as a list of lists
