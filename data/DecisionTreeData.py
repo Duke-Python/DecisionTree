@@ -1,5 +1,8 @@
 
 class DecisionTreeData:
 
-    def __init__(self):
-        pass
+    def split(self, percentage):
+        raise NotImplementedError
+
+    def data(self):
+        raise NotImplementedError
