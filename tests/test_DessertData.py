@@ -18,6 +18,9 @@ class TestInit(TestDessertData):
     def test_neg_rows(self):
         self.assertRaises(ValueError, DessertData, -1)
 
+    def test_wrong_rows(self):
+        self.assertRaises(ValueError, DessertData, 0, 0, [[1]])
+
     def test_num_rows(self):
         for num_rows in range(0, 20):
             with self.subTest(i=num_rows):
