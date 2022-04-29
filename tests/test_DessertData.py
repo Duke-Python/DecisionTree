@@ -6,6 +6,9 @@ from DessertData import DessertData
 class TestDessertData(unittest.TestCase):
 
     def setUp(self) -> None:
+        """
+        Define test data so that each row is [0, row_num]
+        """
         self._tot_rows = 10
         data = []
         for i in range(self._tot_rows):
@@ -18,13 +21,22 @@ class TestInit(TestDessertData):
     def test_neg_rows(self):
         self.assertRaises(ValueError, DessertData, -1)
 
-    def test_wrong_rows(self):
+    def test_wrong_num_rows(self):
         self.assertRaises(ValueError, DessertData, 0, 0, [[1]])
 
     def test_num_rows(self):
         for num_rows in range(0, 20):
             with self.subTest(i=num_rows):
                 self.assertEqual(len(DessertData(num_rows).data), num_rows)
+
+    def test_init_data(self):
+        for num_rows in range(0, 20):
+            with self.subTest(i=num_rows):
+                data = []
+                for i in range(num_rows+1):
+                    data.append([0, i])
+                test_data = DessertData(num_rows+1, data=data)
+                self.assertEqual(test_data.data, data)
 
     @unittest.skip("Noise level not implemented")
     def test_noise_level(self):

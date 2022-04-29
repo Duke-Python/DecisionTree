@@ -33,7 +33,6 @@ class DessertData(DecisionTreeData):
         :param percentage:
         :return: tuple of training data and testing data
         """
-
         if percentage == 0.0:
             return DessertData(0, 0.0, []), self
         if percentage == 1.0:
