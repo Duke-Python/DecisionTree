@@ -33,9 +33,11 @@ class DessertData(DecisionTreeData):
         :param percentage:
         :return: tuple of training data and testing data
         """
-        if percentage == 0.0:
+        train_rows = percentage*self._num_rows
+        if train_rows < 1:
             return DessertData(0, 0.0, []), self
-        if percentage == 1.0:
+        test_rows = self._num_rows - train_rows
+        if test_rows < 1:
             return self, DessertData(0, 0.0, [])
         train_data, test_data = train_test_split(self._data, train_size=percentage)
         train_rows = len(train_data)
