@@ -91,7 +91,6 @@ class TestSplit(TestDessertData):
         self.assertEqual(len(train_set._data), self._tot_rows, "Train set wrong size")
 
 
-
 class TestIsSingleClass(TestDessertData):
     """
     Test that is_single_class() method works.
