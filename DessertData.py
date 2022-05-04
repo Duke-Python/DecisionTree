@@ -45,21 +45,23 @@ class DessertData(DecisionTreeData):
         return DessertData(train_rows, self._noise_level, train_data),\
                DessertData(test_rows, self._noise_level, test_data)
 
-    @property
-    def data(self):
-        """
-        Get the actual data as a list of lists
-        :return: list of lists of the numerical data
-        """
-        return self._data
-
     def _expand(self, num_rows):
         """
         Expand/contract data to num_rows by sampling the row numbers. If shrinking, then don't
         replace the row numbers.
         :param num_rows: Final number of rows in data
         """
-        cur_rows = len(self.data)
+        cur_rows = len(self._data)
         replace_rows = num_rows > cur_rows
         rows = np.random.choice(cur_rows, size=num_rows, replace=replace_rows)
         self._data = self._data[rows, :]
+
+    def is_single_class(self):
+        return False
+
+    def get_max_info_gain(self):
+        """
+        Find feature with maximum information gain
+        :return: feature
+        """
+        return None
