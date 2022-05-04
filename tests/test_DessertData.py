@@ -14,6 +14,10 @@ class TestDessertData(unittest.TestCase):
         for i in range(self._tot_rows):
             data.append([0, i])
         self.test_data = DessertData(self._tot_rows, 0.0, data)
+        data = [[0, i] for i in range(self._tot_rows)]
+        self.multiclass_data = DessertData(self._tot_rows, 0.0, data)
+        data = [[i, 0] for i in range(self._tot_rows)]
+        self.one_class_data = DessertData(self._tot_rows, 0.0, data)
 
 
 class TestInit(TestDessertData):
@@ -73,3 +77,25 @@ class TestSplit(TestDessertData):
 
                 self.assertEqual(len(train_set._data), row_num, "Train set wrong size")
                 self.assertEqual(len(test_set._data), self._tot_rows-row_num, "Test set wrong size")
+
+    def test_split_low(self):
+        percentage = 1/self._tot_rows/2
+        train_set, test_set = self.test_data.split(percentage)
+        self.assertEqual(len(train_set._data), 0, "Train set wrong size")
+        self.assertEqual(len(test_set._data), self._tot_rows, "Test set wrong size")
+
+    def test_split_high(self):
+        percentage = 1 - 1/self._tot_rows/2
+        train_set, test_set = self.test_data.split(percentage)
+        self.assertEqual(len(test_set._data), 0, "Test set wrong size")
+        self.assertEqual(len(train_set._data), self._tot_rows, "Train set wrong size")
+
+
+
+class TestIsSingleClass(TestDessertData):
+    """
+    Test that is_single_class() method works.
+    """
+    def test_is_single_class(self):
+        self.assertTrue(self.one_class_data.is_single_class())
+        self.assertFalse(self.multiclass_data.is_single_class())

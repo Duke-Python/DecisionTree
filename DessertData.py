@@ -57,7 +57,9 @@ class DessertData(DecisionTreeData):
         self._data = self._data[rows, :]
 
     def is_single_class(self):
-        return False
+        test_value = self._data[0][-1]
+        class_data = [row[-1] for row in self._data]
+        return all([elem==test_value for elem in class_data])
 
     def get_max_info_gain(self):
         """
