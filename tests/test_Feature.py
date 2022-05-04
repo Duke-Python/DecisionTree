@@ -23,6 +23,7 @@ class TestHashFeature(TestFeature):
         test_dict[self.feature2] = 1
         self.assertEqual(test_dict[self.feature2], 1)
         test_dict[self.featureOne] = 1
+        self.assertEqual(len(test_dict), 2)
         self.assertEqual(test_dict[self.feature1], 1)
 
 
