@@ -1,13 +1,14 @@
 from learning.LeafNode import LeafNode
 from learning.DecisionNode import DecisionNode
+from learning.Node import Node
 
 
 class DecisionTree:
 
-    def __init__(self, train_data):
+    def __init__(self, train_data) -> None:
         self._root = self._id3(train_data)
 
-    def test(self, data):
+    def test(self, data) -> float:
         """
         Test the decision tree
         :param data: object used to test the decision tree
@@ -16,7 +17,7 @@ class DecisionTree:
 
         return 0.0
 
-    def _id3(self, data):
+    def _id3(self, data) -> Node:
         if data.is_single_class():
             return LeafNode(data.class_attribute)
         feature = data.get_max_info_gain()

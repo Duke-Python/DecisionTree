@@ -10,7 +10,7 @@ class DessertData(DecisionTreeData):
     The dessert data. Numerical data is stored as a list of lists. Features is a dictionary using
     feature as a key and the column as the value.
     """
-    def __init__(self, num_rows: int, noise=0.0, data: tuple[list, dict] = None):
+    def __init__(self, num_rows: int, noise=0.0, data: tuple[list, dict] = None) -> None:
         """
         Initialize dessert data
         :param num_rows:
@@ -38,7 +38,11 @@ class DessertData(DecisionTreeData):
                 raise ValueError("Num of features must match data")
 
     @staticmethod
-    def _define_features():
+    def _define_features() -> dict:
+        """
+        Define the features of this data set. Make static to allow it to be called from __init__
+        :return: feature dictionary
+        """
         feature_descriptions = ["Eaten", "Hungry", "Healthy", "Tasty"]
         values = [{"yes": 1, "no": 0}, {"yes": 1, "no": 0}, {"yes": 1, "no": 0}]
         ret_dict = {}
@@ -67,7 +71,7 @@ class DessertData(DecisionTreeData):
                DessertData(test_rows, self._noise_level, test_data)
 
     @staticmethod
-    def _expand(num_rows, data):
+    def _expand(num_rows, data) -> list:
         """
         Expand/contract data to num_rows by sampling the row numbers. If shrinking, then don't
         replace the row numbers. Make static to enable calling from __init__
